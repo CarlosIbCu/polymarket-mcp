@@ -1,0 +1,11 @@
+runtime: "container"
+startCommand:
+  type: "http"
+  # No configuration required for public Polymarket endpoints
+  configSchema:
+    type: "object"
+    properties: {}
+    additionalProperties: false
+build:
+  dockerfile: "Dockerfile"
+  dockerBuildPath: "." 
