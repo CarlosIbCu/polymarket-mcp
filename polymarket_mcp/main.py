@@ -1,6 +1,7 @@
-from fastapi import FastAPI, Query, HTTPException
-from typing import Optional
+from fastapi import FastAPI, Query, HTTPException, Request
+from typing import Optional, Dict, Any
 import httpx
+import json
 
 app = FastAPI(
     title="Polymarket MCP Server",
@@ -9,6 +10,27 @@ app = FastAPI(
 )
 
 BASE_URL = "https://clob.polymarket.com"
+
+# Smithery MCP endpoint handler
+@app.get("/mcp")
+@app.post("/mcp")
+@app.delete("/mcp")
+async def handle_mcp(request: Request):
+    """Handle Smithery MCP requests with configuration."""
+    # Parse dot-notation query params into config object
+    config = {}
+    for key, value in request.query_params.items():
+        parts = key.split('.')
+        current = config
+        for part in parts[:-1]:
+            current = current.setdefault(part, {})
+        current[parts[-1]] = value
+    
+    # Return schema on GET
+    if request.method == "GET":
+        return await get_schema()
+    
+    return {"message": "Method not supported"}
 
 
 @app.get("/schema", tags=["mcp"])
