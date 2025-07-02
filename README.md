@@ -139,5 +139,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 This project is MIT licensed. See the [LICENSE](LICENSE) file for details.
 
 ---
-
-Made with ❤️ for the Model Context Protocol community
