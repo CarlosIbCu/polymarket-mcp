@@ -1,0 +1,34 @@
+runtime: "container"
+startCommand:
+  type: "http"
+  # No configuration required for public Polymarket endpoints
+  configSchema:
+    type: "object"
+    properties:
+      server:
+        type: "object"
+        properties:
+          host:
+            type: "string"
+            description: "Server host"
+            default: "0.0.0.0"
+          port:
+            type: "integer"
+            description: "Server port"
+            default: 3333
+          timeout:
+            type: "integer"
+            description: "Request timeout in seconds"
+            default: 30
+    additionalProperties: false
+  exampleConfig:
+    server:
+      host: "0.0.0.0"
+      port: 3333
+      timeout: 30
+build:
+  dockerfile: "Dockerfile"
+  dockerBuildPath: "."
+  healthcheck:
+    path: "/mcp"
+    method: "GET" 
